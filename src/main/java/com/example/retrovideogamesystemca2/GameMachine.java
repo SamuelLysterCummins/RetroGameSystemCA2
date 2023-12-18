@@ -1,3 +1,7 @@
+package com.example.retrovideogamesystemca2;
+
+import com.example.retrovideogamesystemca2.Game;
+
 public class GameMachine {
 
     private String machineName;

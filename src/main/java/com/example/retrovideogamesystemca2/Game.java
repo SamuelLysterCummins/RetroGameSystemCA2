@@ -1,3 +1,5 @@
+package com.example.retrovideogamesystemca2;
+
 public class Game {
 
     private String gameName;

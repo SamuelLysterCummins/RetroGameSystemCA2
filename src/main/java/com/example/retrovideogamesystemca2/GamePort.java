@@ -1,3 +1,8 @@
+package com.example.retrovideogamesystemca2;
+
+import com.example.retrovideogamesystemca2.Game;
+import com.example.retrovideogamesystemca2.GameMachine;
+
 public class GamePort {
 
     private Game originalGame;
