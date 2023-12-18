@@ -5,4 +5,8 @@ module com.example.retrovideogamesystemca2 {
 
     opens com.example.retrovideogamesystemca2 to javafx.fxml;
     exports com.example.retrovideogamesystemca2;
+    exports;
+    opens to
+    exports;
+    opens to
 }
