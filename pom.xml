@@ -61,7 +61,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.example.retrovideogamesystemca2/com.example.retrovideogamesystemca2.HelloApplication
+                                com.example.retrovideogamesystemca2/com.example.retrovideogamesystemca2.GameSystemApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>

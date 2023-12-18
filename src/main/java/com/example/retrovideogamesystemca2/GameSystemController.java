@@ -3,7 +3,7 @@ package com.example.retrovideogamesystemca2;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 
-public class HelloController {
+public class GameSystemController {
     @FXML
     private Label welcomeText;
 
