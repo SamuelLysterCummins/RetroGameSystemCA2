@@ -20,7 +20,7 @@ public class GameMachine {
 
     private String imageUrl;
 
-    private Game[] games;
+    private FastHash<Game> games;
 
     private int gamesCount;
 
@@ -33,7 +33,7 @@ public class GameMachine {
         this.machineReleaseYear = machineReleaseYear;
         this.machinePrice = machinePrice;
         this.imageUrl = imageUrl;
-        this.games = new Game[10];
+        this.games = new FastHash<>(10);
         this.gamesCount = 0;
     }
 
@@ -101,11 +101,11 @@ public class GameMachine {
         this.imageUrl = imageUrl;
     }
 
-    public Game[] getGames() {
+    public FastHash<Game> getGames() {
         return games;
     }
 
-    public void setGames(Game[] games) {
+    public void setGames(FastHash<Game> games) {
         this.games = games;
     }
 
@@ -116,4 +116,13 @@ public class GameMachine {
     public void setGamesCount(int gamesCount) {
         this.gamesCount = gamesCount;
     }
+
+    public void addGame(String gameKey, Game game){
+     games.add(gameKey, game);
+    }
+
+    public Game getGame(String gameKey) {
+        return games.get(gameKey);
+    }
+
 }

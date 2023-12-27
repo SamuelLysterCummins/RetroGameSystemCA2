@@ -18,7 +18,7 @@ public class Game {
 
     private String cover;
 
-    private GamePort[] ports;
+    private FastHash<GamePort> ports;
 
     private int portsCount;
 
@@ -32,7 +32,7 @@ public class Game {
         this.machine = machine;
         this.gameReleaseYear = gameReleaseYear;
         this.cover = cover;
-        this.ports = new GamePort[5];
+        this.ports = new FastHash<>(10);
         this.portsCount = 0;
     }
 
@@ -100,11 +100,12 @@ public class Game {
         this.cover = cover;
     }
 
-    public GamePort[] getPorts() {
+
+    public FastHash<GamePort> getPorts() {
         return ports;
     }
 
-    public void setPorts(GamePort[] ports) {
+    public void setPorts(FastHash<GamePort> ports) {
         this.ports = ports;
     }
 
@@ -114,5 +115,13 @@ public class Game {
 
     public void setPortsCount(int portsCount) {
         this.portsCount = portsCount;
+    }
+
+    public void addPort(String portKey, GamePort port) {
+        ports.add(portKey, port);
+    }
+
+    public GamePort getPort(String portKey) {
+        return ports.get(portKey);
     }
 }
