@@ -11,7 +11,6 @@ public class FastHash<T> {
     static class HashEntry<T> {
         String key;
         T value;
-
         HashEntry(String key, T value) {
             this.key = key;
             this.value = value;
