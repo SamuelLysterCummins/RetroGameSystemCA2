@@ -105,4 +105,9 @@ public class GameMachine {
     public void setGamesCount(int gamesCount) {
         this.gamesCount = gamesCount;
     }
+
+    @Override
+    public String toString() {
+        return machineName + " - " + manufacturer + " (" + type + ", " + media + ", Year: " + machineReleaseYear + ", Price: €"+ machinePrice + ")";
+    }
 }

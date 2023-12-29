@@ -63,5 +63,12 @@ public class GamePort {
         this.cover = cover;
     }
 
+    @Override
+    public String toString() {
+        String originalGameName = originalGame != null ? originalGame.getGameName() : "Unknown";
+        String portedMachineName = portedMachine != null ? portedMachine.getMachineName() : "Unknown";
 
+        return originalGameName + " - Ported to " + portedMachineName +
+                " (Developed by " + portDeveloper + ", " + gamePortReleaseYear + ")";
+    }
 }

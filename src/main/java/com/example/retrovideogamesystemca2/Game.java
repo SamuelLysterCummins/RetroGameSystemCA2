@@ -124,4 +124,9 @@ public class Game {
     public GamePort getPort(String portKey) {
         return ports.get(portKey);
     }
+
+    @Override
+    public String toString() {
+        return gameName + " - " + publisher + " (Developed by " + developer + ", for " + machineDevelopedFor + ", " + gameReleaseYear + ")";
+    }
 }

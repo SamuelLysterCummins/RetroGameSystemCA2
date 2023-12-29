@@ -48,4 +48,18 @@ public class FastHash<T> {
         }
         return null;
     }
+
+    public boolean remove(String key) {
+        int hashIndex = hashFunction(key);
+        for (int i = 0; i < hashTable.length; i++) {
+            int index = (hashIndex + i) % hashTable.length;
+            HashEntry<T> entry = hashTable[index];
+            if (entry != null && entry.key.equals(key)) {
+                hashTable[index] = null; // Marking the entry as removed
+                return true; // Successfully removed
+            }
+        }
+        return false; // Key not found
+    }
+
 }
