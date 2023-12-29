@@ -55,8 +55,8 @@ public class FastHash<T> {
             int index = (hashIndex + i) % hashTable.length;
             HashEntry<T> entry = hashTable[index];
             if (entry != null && entry.key.equals(key)) {
-                hashTable[index] = null; // Marking the entry as removed
-                return true; // Successfully removed
+                hashTable[index] = null;
+                return true;
             }
         }
         return false; // Key not found
