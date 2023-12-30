@@ -8,6 +8,8 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class GameSystemController {
 
     private FastHash<GameMachine> gameMachines = new FastHash<>(10);
@@ -23,9 +25,48 @@ public class GameSystemController {
     @FXML
     private Button myDeleteButton;
 
+    private GamesSystem system;
+
+    public GameSystemController(){
+        system = GamesSystem.getInstance();
+    }
 
     public void initialize(){
+refreshGameMachines();
+        refreshGames();
+        refreshPortedGames();
+    }
 
+    public void refreshGameMachines() {
+        gameMachineListView.getItems().clear();
+        if (system.getGameMachines() != null) {
+            for (GameMachine gameMachine : system.getGameMachines()) {
+                gameMachineListView.getItems().add(gameMachine);
+            }
+        }
+    }
+
+
+    public void refreshGames(){
+        gameListView.getItems().clear();
+        if (system.getGames() != null) {
+            for (Game game : system.getGames()) {
+                gameListView.getItems().add(game);
+            }
+        }
+    }
+
+    public void refreshPortedGames(){
+gamePortListView.getItems().clear();
+        if (system.getGames() != null) {
+            for (Game game : system.getGames()) {
+                if (game.getPorts() != null) {
+                    for (GamePort gamePort : game.getPorts()) {
+                        gamePortListView.getItems().add(gamePort);
+                    }
+                }
+            }
+        }
     }
 
     public void showAddGameMachineDialog() {
@@ -174,26 +215,27 @@ public class GameSystemController {
     }
     public void addGameMachineButton(String name, String manufacturer, String description, String type, String media, int year, double price, String imageUrl) {
         GameMachine gameMachine = new GameMachine(name, manufacturer, description, type, media, year, price, imageUrl);
-        gameMachines.add(name, gameMachine);
-        gameMachineListView.getItems().add(gameMachine);
+        system.addGameMachine(name, gameMachine);
+        refreshGameMachines();
     }
 
 
 
     public void addGameButton(String gameName, String publisher, String description, String developer, String machineDevelopedFor, int gameReleaseYear, String cover) {
         Game game = new Game(gameName, publisher, description, developer, machineDevelopedFor, null, gameReleaseYear, cover);
-        games.add(gameName, game);
-        gameListView.getItems().add(game);
+        system.addGame(gameName, game);
+        refreshGames();
         }
 
 
     public void addGamePortButton(String originalGameName, String portedMachineName, String portDeveloper, int gamePortReleaseYear, String cover) {
-        Game originalGame = games.get(originalGameName);
-        GameMachine portedMachine = gameMachines.get(portedMachineName);
+        Game originalGame = system.getGame(originalGameName);
+        GameMachine portedMachine = system.getGameMachine(portedMachineName);
 
         if (originalGame != null && portedMachine != null) {
             GamePort gamePort = new GamePort(originalGame, portedMachine, portDeveloper, gamePortReleaseYear, cover);
-            gamePorts.add(originalGameName + "-" + portedMachineName, gamePort);
+            originalGame.addPort(originalGameName + "-" + portedMachineName, gamePort);
+            system.addGame(originalGameName, originalGame);
             gamePortListView.getItems().add(gamePort);
         } else {
             showAlert("Error", "Original game or ported machine not found");
@@ -228,10 +270,6 @@ public class GameSystemController {
         }
     }
 
-    @FXML
-    private void editButton(ActionEvent event){
-
-    }
     public void deleteSelectedGameMachine() {
         GameMachine selectedGameMachine = gameMachineListView.getSelectionModel().getSelectedItem();
         if (selectedGameMachine != null) {
@@ -261,5 +299,131 @@ public class GameSystemController {
         } else {
             showAlert("Error", "No game port selected for deletion");
         }
+    }
+
+    @FXML
+    private void editButton(ActionEvent event) {
+        if (!gameMachineListView.getSelectionModel().isEmpty()) {
+            editGameMachineDialog();
+        } else if (!gameListView.getSelectionModel().isEmpty()) {
+            editGameDialog();
+        } else if (!gamePortListView.getSelectionModel().isEmpty()) {
+            editGamePortDialog();
+        } else {
+            showAlert("Error", "No item selected for editing");
+        }
+    }
+
+    @FXML
+    private void editGameMachineDialog() {
+        GameMachine selectedGameMachine = gameMachineListView.getSelectionModel().getSelectedItem();
+        if (selectedGameMachine != null) {
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Edit Game Machine");
+
+            VBox dialogVbox = new VBox(20);
+            TextField nameField = new TextField(selectedGameMachine.getMachineName());
+            TextField manufacturerField = new TextField(selectedGameMachine.getManufacturer());
+            TextField descriptionField = new TextField(selectedGameMachine.getDescription());
+            TextField typeField = new TextField(selectedGameMachine.getType());
+            TextField mediaField = new TextField(selectedGameMachine.getMedia());
+            TextField yearField = new TextField(String.valueOf(selectedGameMachine.getMachineReleaseYear()));
+            TextField priceField = new TextField(String.valueOf(selectedGameMachine.getMachinePrice()));
+            TextField imageUrlField = new TextField(selectedGameMachine.getImageUrl());
+
+            Button submitButton = new Button("Save Changes");
+            submitButton.setOnAction(e -> {
+                selectedGameMachine.setMachineName(nameField.getText());
+                selectedGameMachine.setManufacturer(manufacturerField.getText());
+                selectedGameMachine.setDescription(descriptionField.getText());
+                selectedGameMachine.setType(typeField.getText());
+                selectedGameMachine.setMedia(mediaField.getText());
+                selectedGameMachine.setMachineReleaseYear(Integer.parseInt(yearField.getText()));
+                selectedGameMachine.setMachinePrice(Double.parseDouble(priceField.getText()));
+                selectedGameMachine.setImageUrl(imageUrlField.getText());
+                gameMachineListView.refresh();
+                dialog.close();
+            });
+
+            dialogVbox.getChildren().addAll(nameField, manufacturerField, descriptionField, typeField, mediaField, yearField, priceField, imageUrlField, submitButton);
+            Scene dialogScene = new Scene(dialogVbox, 300, 400);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            showAlert("Error", "No game machine selected for editing");
+        }
+    }
+
+    @FXML
+    private void editGameDialog() {
+        Game selectedGame = gameListView.getSelectionModel().getSelectedItem();
+        if (selectedGame != null) {
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Edit Game");
+
+            VBox dialogVbox = new VBox(20);
+            TextField gameNameField = new TextField(selectedGame.getGameName());
+            TextField publisherField = new TextField(selectedGame.getPublisher());
+            TextField descriptionField = new TextField(selectedGame.getDescription());
+            TextField developerField = new TextField(selectedGame.getDeveloper());
+            TextField machineDevelopedForField = new TextField(selectedGame.getMachineDevelopedFor());
+            TextField gameReleaseYearField = new TextField(String.valueOf(selectedGame.getGameReleaseYear()));
+            TextField coverField = new TextField(selectedGame.getCover());
+
+            Button submitButton = new Button("Save Changes");
+            submitButton.setOnAction(e -> {
+                selectedGame.setGameName(gameNameField.getText());
+                selectedGame.setPublisher(publisherField.getText());
+                selectedGame.setDescription(descriptionField.getText());
+                selectedGame.setDeveloper(developerField.getText());
+                selectedGame.setMachineDevelopedFor(machineDevelopedForField.getText());
+                selectedGame.setGameReleaseYear(Integer.parseInt(gameReleaseYearField.getText()));
+                selectedGame.setCover(coverField.getText());
+                gameListView.refresh();
+                dialog.close();
+            });
+
+            dialogVbox.getChildren().addAll(gameNameField, publisherField, descriptionField, developerField, machineDevelopedForField, gameReleaseYearField, coverField, submitButton);
+            Scene dialogScene = new Scene(dialogVbox, 300, 400);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            showAlert("Error", "No game selected for editing");
+        }
+    }
+
+    private void editGamePortDialog() {
+        GamePort selectedGamePort = gamePortListView.getSelectionModel().getSelectedItem();
+        if (selectedGamePort != null) {
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Edit Game Port");
+
+            VBox dialogVbox = new VBox(20);
+            TextField originalGameField = new TextField(selectedGamePort.getOriginalGame().getGameName());
+            TextField portedMachineField = new TextField(selectedGamePort.getPortedMachine().getMachineName());
+            TextField portDeveloperField = new TextField(selectedGamePort.getPortDeveloper());
+            TextField gamePortReleaseYearField = new TextField(String.valueOf(selectedGamePort.getGamePortReleaseYear()));
+            TextField coverField = new TextField(selectedGamePort.getCover());
+
+            Button submitButton = new Button("Save Changes");
+            submitButton.setOnAction(e -> {
+                gamePortListView.refresh();
+                dialog.close();
+            });
+
+            dialogVbox.getChildren().addAll(originalGameField, portedMachineField, portDeveloperField, gamePortReleaseYearField, coverField, submitButton);
+            Scene dialogScene = new Scene(dialogVbox, 300, 400);
+            dialog.setScene(dialogScene);
+            dialog.show();
+        } else {
+            showAlert("Error", "No game port selected for editing");
+        }
+    }
+
+    public void switchToSearch(ActionEvent event) throws IOException{
+        SceneManager.getInstance().switchScene("search.fxml");
     }
 }

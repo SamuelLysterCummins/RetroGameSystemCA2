@@ -9,6 +9,7 @@ public class GamesSystem {
 
     public GamesSystem(){
         this.games = new FastHash<>(10);
+        this.gameMachines = new FastHash<>(10);
     }
     public static GamesSystem getInstance(){
         if(instance == null){

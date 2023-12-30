@@ -1,8 +1,14 @@
 package com.example.retrovideogamesystemca2;
+import java.util.Iterator;
 import java.util.Scanner;
 
-public class FastHash<T> {
+public class FastHash<T> implements Iterable<T> {
     private HashEntry<T>[] hashTable;
+
+    @Override
+    public Iterator<T> iterator() {
+        return new FastHashIterator<>(hashTable);
+    }
 
     public FastHash(int size) {
         hashTable = new HashEntry[size];
@@ -15,6 +21,7 @@ public class FastHash<T> {
             this.key = key;
             this.value = value;
         }
+
     }
 
     public int hashFunction(String key) {
@@ -59,7 +66,7 @@ public class FastHash<T> {
                 return true;
             }
         }
-        return false; // Key not found
+        return false;
     }
 
 }
