@@ -3,13 +3,14 @@ package com.example.retrovideogamesystemca2;
 public class GamesSystem {
 
     private FastHash<Game> games;
-
+    private FastHash<GamePort> gamePorts;
     private FastHash<GameMachine> gameMachines;
     private static GamesSystem instance;
 
     public GamesSystem(){
         this.games = new FastHash<>(10);
         this.gameMachines = new FastHash<>(10);
+        this.gamePorts = new FastHash<>(10);
     }
     public static GamesSystem getInstance(){
         if(instance == null){
@@ -38,6 +39,10 @@ public class GamesSystem {
         this.gameMachines = gameMachines;
     }
 
+    public FastHash<GamePort> getGamePorts() { return gamePorts; }
+
+    public void setGamePorts(FastHash<GamePort> gamePorts) {this.gamePorts = gamePorts; }
+
     public void addGame(String gameKey, Game game){
         games.add(gameKey, game);
     }
@@ -46,11 +51,15 @@ public class GamesSystem {
         return games.get(gameKey);
     }
 
-    public void addGameMachine(String gameMachineKey, GameMachine gameMachine){
-        gameMachines.add(gameMachineKey, gameMachine);
-    }
+    public void addGameMachine(String gameMachineKey, GameMachine gameMachine){ gameMachines.add(gameMachineKey, gameMachine);}
 
     public GameMachine getGameMachine(String gameMachineKey) {
         return gameMachines.get(gameMachineKey);
+    }
+
+    public void addGamePort(String gamePortKey, GamePort gamePort) {gamePorts.add(gamePortKey, gamePort);
+    }
+
+    public GamePort getGamePort(String gamePortKey) { return gamePorts.get(gamePortKey);
     }
 }

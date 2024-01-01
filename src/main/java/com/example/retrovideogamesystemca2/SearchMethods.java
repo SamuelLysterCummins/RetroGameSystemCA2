@@ -34,10 +34,10 @@ public class SearchMethods {
             }
         }
 
-        GamePort[] allGamePorts = system.getAllGamePorts();
+        FastHash<GamePort> allGamePorts = system.getGamePorts();
         for (GamePort gamePort : allGamePorts) {
             if (gamePort != null) {
-                String gamePortKey = generateGamePortKey(gamePort.getName(), gamePort.getMachineName(), gamePort.getReleaseYear());
+                String gamePortKey = generateGamePortKey(gamePort.getOriginalGame(), gamePort.getPortedMachine(), gamePort.getGamePortReleaseYear());
                 gamePortHashTable.add(gamePortKey, gamePort);
             }
         }

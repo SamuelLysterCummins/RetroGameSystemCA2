@@ -1,8 +1,5 @@
 package com.example.retrovideogamesystemca2;
 
-import com.example.retrovideogamesystemca2.Game;
-import com.example.retrovideogamesystemca2.GameMachine;
-
 public class GamePort {
 
     private Game originalGame;
@@ -23,7 +20,7 @@ public class GamePort {
         this.cover = cover;
     }
 
-    public Game getOriginalGame() {
+    public String getOriginalGame() {
         return originalGame;
     }
 
@@ -31,7 +28,7 @@ public class GamePort {
         this.originalGame = originalGame;
     }
 
-    public GameMachine getPortedMachine() {
+    public String getPortedMachine() {
         return portedMachine;
     }
 
