@@ -24,6 +24,8 @@ public class GameSystemController {
     private ListView<GamePort> gamePortListView;
     @FXML
     private Button myDeleteButton;
+    @FXML
+    private Button sortButton;
 
     private GamesSystem system;
 
