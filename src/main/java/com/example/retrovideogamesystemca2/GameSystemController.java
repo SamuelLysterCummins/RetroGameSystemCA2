@@ -421,7 +421,7 @@ gamePortListView.getItems().clear();
             dialog.setScene(dialogScene);
             dialog.show();
         } else {
-            showAlert("Error", "No game port selected for editing");
+            showAlert("Error", "No port selected for editing");
         }
     }
 
