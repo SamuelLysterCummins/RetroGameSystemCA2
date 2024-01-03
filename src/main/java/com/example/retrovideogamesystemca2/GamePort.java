@@ -20,7 +20,7 @@ public class GamePort {
         this.cover = cover;
     }
 
-    public String getOriginalGame() {
+    public Game getOriginalGame() {
         return originalGame;
     }
 
@@ -28,7 +28,7 @@ public class GamePort {
         this.originalGame = originalGame;
     }
 
-    public String getPortedMachine() {
+    public GameMachine getPortedMachine() {
         return portedMachine;
     }
 

@@ -68,7 +68,11 @@ public class SearchController {
 
     private String generateGameKey(String gameTitle, String publisher, String developer, int releaseYear) {return gameTitle + "-" + publisher + "-" + developer + "-" + releaseYear;}
 
-    private String generateGamePortKey(String gameTitle, String machineName, int releaseYear) {return gameTitle + "-" + machineName + "-" + releaseYear;}
+    private String generateGamePortKey(Game originalGame, GameMachine portedMachine, int gamePortReleaseYear) {
+        String originalGameName = (originalGame != null) ? originalGame.getGameName() : "";
+        String portedMachineName = (portedMachine != null) ? portedMachine.getMachineName() : "";
+        return originalGameName + "-" + portedMachineName + "-" + gamePortReleaseYear;}
+
 
 
     // GameMachine + its fxml portion
