@@ -1,8 +1,9 @@
 package com.example.retrovideogamesystemca2;
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Scanner;
 
-public class FastHash<T> implements Iterable<T> {
+public class FastHash<T> implements Iterable<T>, Serializable {
     private HashEntry<T>[] hashTable;
 
     @Override

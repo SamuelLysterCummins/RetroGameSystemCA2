@@ -428,4 +428,8 @@ gamePortListView.getItems().clear();
     public void switchToSearch(ActionEvent event) throws IOException{
         SceneManager.getInstance().switchScene("search.fxml");
     }
+
+    public void switchToSave(ActionEvent event) throws IOException{
+        SceneManager.getInstance().switchScene("save.fxml");
+    }
 }

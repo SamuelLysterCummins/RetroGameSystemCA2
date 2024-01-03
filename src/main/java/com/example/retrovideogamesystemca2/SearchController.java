@@ -217,4 +217,8 @@ public class SearchController {
     public void switchToGameSystem(ActionEvent event) throws IOException {
         SceneManager.getInstance().switchScene("gameSystem.fxml");
     }
+
+    public void switchToSave(ActionEvent event) throws IOException{
+        SceneManager.getInstance().switchScene("save.fxml");
+    }
 }

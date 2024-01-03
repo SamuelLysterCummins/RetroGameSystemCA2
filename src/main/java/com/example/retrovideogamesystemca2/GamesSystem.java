@@ -1,5 +1,10 @@
 package com.example.retrovideogamesystemca2;
 
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.DomDriver;
+
+import java.io.*;
+
 public class GamesSystem {
 
     private FastHash<Game> games;
@@ -63,5 +68,28 @@ public class GamesSystem {
     public GamePort getGamePort(String gamePortKey) { return gamePorts.get(gamePortKey);
     }
 
+    @SuppressWarnings("unchecked")
+    public void save(String filePath) throws IOException {
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypesByWildcard(new String[] {
+                "com.example.retrovideogamesystemca2.**"
+        });
 
+        try (ObjectOutputStream out = xstream.createObjectOutputStream(new FileWriter(filePath))) {
+            out.writeObject(this);
+        }
+    }
+
+    public static GamesSystem load(String filePath) throws IOException, ClassNotFoundException {
+        XStream xstream = new XStream(new DomDriver());
+        XStream.setupDefaultSecurity(xstream);
+        xstream.allowTypesByWildcard(new String[] {
+                "com.example.retrovideogamesystemca2.**"
+        });
+
+        try (ObjectInputStream is = xstream.createObjectInputStream(new FileReader(filePath))) {
+            return (GamesSystem) is.readObject();
+        }
+    }
 }

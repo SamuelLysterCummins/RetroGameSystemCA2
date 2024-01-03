@@ -23,12 +23,12 @@
                         <Font size="17.0" />
                     </font>
                 </Button>
-                <Button layoutX="10.0" layoutY="74.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="133.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="3" textFill="WHITE">
+                <Button fx:id="mySaveTab" layoutX="10.0" layoutY="74.0" mnemonicParsing="false" onAction="#switchToSave" prefHeight="64.0" prefWidth="133.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="Save" textFill="WHITE">
                     <font>
                         <Font size="17.0" />
                     </font>
                 </Button>
-                <Button layoutX="10.0" layoutY="138.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="133.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" text="4" textFill="WHITE">
+                <Button layoutX="10.0" layoutY="138.0" mnemonicParsing="false" prefHeight="64.0" prefWidth="133.0" style="-fx-background-color: transparent; -fx-border-color: white; -fx-border-width: 0px 0px 2px 0px;" textFill="WHITE">
                     <font>
                         <Font size="17.0" />
                     </font>
