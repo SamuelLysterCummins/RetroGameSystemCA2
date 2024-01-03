@@ -238,7 +238,7 @@ gamePortListView.getItems().clear();
             GamePort gamePort = new GamePort(originalGame, portedMachine, portDeveloper, gamePortReleaseYear, cover);
             originalGame.addPort(originalGameName + "-" + portedMachineName, gamePort);
             system.addGame(originalGameName, originalGame);
-            gamePortListView.getItems().add(gamePort);
+            refreshPortedGames();
         } else {
             showAlert("Error", "Original game or ported machine not found");
         }

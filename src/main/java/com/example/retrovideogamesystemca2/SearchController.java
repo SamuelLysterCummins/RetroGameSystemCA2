@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 
 import java.io.IOException;
 
@@ -26,6 +27,41 @@ public class SearchController {
     private Button mySearchButtonGame;
     @FXML
     private Button mySearchButtonPort;
+    @FXML
+    private TextField gameMachineName;
+
+    @FXML
+    private TextField gameMachineMedia;
+
+    @FXML
+    private TextField gameMachineType;
+
+    @FXML
+    private TextField gameMachineManufacturer;
+
+    @FXML
+    private TextField gameMachineReleaseYear;
+
+    @FXML
+    private TextField gameName;
+
+    @FXML
+    private TextField gameDeveloper;
+
+    @FXML
+    private TextField gamePublisher;
+
+    @FXML
+    private TextField gameReleaseYear;
+
+    @FXML
+    private TextField portedGameName;
+
+    @FXML
+    private TextField portedGameMachine;
+
+    @FXML
+    private TextField portedGameReleaseYear;
     @FXML
     private ListView<GameMachine> gameMachineListSearchView;
     @FXML
@@ -64,7 +100,9 @@ public class SearchController {
         }
     }
 
-    private String generateMachineKey(String machineName, String type, int year, String manufacturer) {return machineName + "-" + type + "-" + year + "-" + manufacturer;}
+    private String generateMachineKey(String machineName, String type, int year, String manufacturer) {
+        return machineName + "-" + type + "-" + year + "-" + manufacturer;
+    }
 
     private String generateGameKey(String gameTitle, String publisher, String developer, int releaseYear) {return gameTitle + "-" + publisher + "-" + developer + "-" + releaseYear;}
 
@@ -81,18 +119,26 @@ public class SearchController {
         return machineHashTable.get(key);
     }
     public void SearchingGameMachine(ActionEvent event) {
-        String name = "";
-        String type = "";
+        String name = gameMachineName.getText().trim();
+        String manufacturer = gameMachineManufacturer.getText().trim();
+        String type = gameMachineType.getText().trim();
         int year = 0;
-        String manufacturer = "";
+
+        try {
+            if (!gameMachineReleaseYear.getText().trim().isEmpty()) {
+                year = Integer.parseInt(gameMachineReleaseYear.getText().trim());
+            }
+        } catch (NumberFormatException e) {
+            gameMachineListSearchView.getItems().clear();
+            return;
+        }
 
         GameMachine searchedGameMachine = searchGameMachine(name, type, year, manufacturer);
 
+        gameMachineListSearchView.getItems().clear();
         if (searchedGameMachine != null) {
-            gameMachineListSearchView.getItems().clear();
             gameMachineListSearchView.getItems().add(searchedGameMachine);
         } else {
-            gameMachineListSearchView.getItems().clear();
             System.out.println("Game machine not found.");
         }
     }
@@ -102,39 +148,63 @@ public class SearchController {
         return gameHashTable.get(key);
     }
     public void SearchingGame(ActionEvent event) {
-        String gameTitle = "";
-        String publisher = "";
-        String developer = "";
+        String gameTitle = gameName.getText().trim();
+        String publisher = gamePublisher.getText().trim();
+        String developer = gameDeveloper.getText().trim();
         int releaseYear = 0;
+
+        try {
+            if (!gameReleaseYear.getText().trim().isEmpty()) {
+                releaseYear = Integer.parseInt(gameReleaseYear.getText().trim());
+            }
+        } catch (NumberFormatException e) {
+            gameListSearchView.getItems().clear();
+            return;
+        }
 
         Game searchedGame = searchGame(gameTitle, publisher, developer, releaseYear);
 
+        gameListSearchView.getItems().clear();
         if (searchedGame != null) {
-            gameListSearchView.getItems().clear();
             gameListSearchView.getItems().add(searchedGame);
         } else {
-            gameListSearchView.getItems().clear();
             System.out.println("Game not found.");
         }
     }
     // GamePort + its fxml portion
-    public GamePort searchGamePort(Game game, GameMachine machine, int releaseYear) {
+    public GamePort searchGamePort(String gameName, String machineName, int releaseYear) {
+        Game game = system.getGame(gameName);
+        GameMachine machine = system.getGameMachine(machineName);
+
+        if (game == null || machine == null) {
+            return null;
+        }
+
         String key = generateGamePortKey(game, machine, releaseYear);
         return gamePortHashTable.get(key);
     }
     public void SearchingGamePort(ActionEvent event) {
-        Game game = null;
-        GameMachine machine = null;
+        String gameName = portedGameName.getText().trim();
+        String machineName = portedGameMachine.getText().trim();
         int releaseYear = 0;
 
-        GamePort searchedGamePort = searchGamePort(game, machine, releaseYear);
-
-        if (searchedGamePort != null) {
+        try {
+            if (!portedGameReleaseYear.getText().trim().isEmpty()) {
+                releaseYear = Integer.parseInt(portedGameReleaseYear.getText().trim());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid year format");
             gamePortListSearchView.getItems().clear();
+            return;
+        }
+
+        GamePort searchedGamePort = searchGamePort(gameName, machineName, releaseYear);
+
+        gamePortListSearchView.getItems().clear();
+        if (searchedGamePort != null) {
             gamePortListSearchView.getItems().add(searchedGamePort);
         } else {
-            gamePortListSearchView.getItems().clear();
-            System.out.println("Game not found.");
+            System.out.println("Game port not found.");
         }
     }
 

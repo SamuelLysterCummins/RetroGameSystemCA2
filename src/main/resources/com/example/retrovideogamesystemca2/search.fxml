@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.retrovideogamesystemca2.SearchController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.retrovideogamesystemca2.SearchController">
     <left>
         <VBox fx:id="vb" prefHeight="400.0" prefWidth="133.0" style="-fx-background-color: #0D1824;" BorderPane.alignment="CENTER">
             <children>
@@ -34,11 +39,11 @@
     <center>
         <AnchorPane fx:id="ap" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #14242B;" BorderPane.alignment="CENTER">
             <children>
-                <Button fx:id="mySearchButtonMachine" layoutX="25.0" layoutY="209.0" mnemonicParsing="false" onAction="#SearchingGameMachine" text="Search for Machine" />
-                <Button fx:id="mySearchButtonGame" layoutX="173.0" layoutY="209.0" mnemonicParsing="false" onAction="#SearchingGame" text="Search for Game" />
-                <Button fx:id="mySearchButtonPort" layoutX="334.0" layoutY="209.0" mnemonicParsing="false" onAction="#SearchingGamePort" text="Search for Port" />
+                <Button fx:id="mySearchButtonMachine" layoutX="25.0" layoutY="330.0" mnemonicParsing="false" onAction="#SearchingGameMachine" text="Search for Machine" />
+                <Button fx:id="mySearchButtonGame" layoutX="173.0" layoutY="330.0" mnemonicParsing="false" onAction="#SearchingGame" text="Search for Game" />
+                <Button fx:id="mySearchButtonPort" layoutX="333.0" layoutY="330.0" mnemonicParsing="false" onAction="#SearchingGamePort" text="Search for Port" />
                 <ListView fx:id="gameMachineListSearchView" layoutX="27.0" layoutY="55.0" prefHeight="122.0" prefWidth="114.0" />
-                <ListView fx:id="gameListSearchView" layoutX="164.0" layoutY="55.0" prefHeight="123.0" prefWidth="123.0" />
+                <ListView fx:id="gameListSearchView" layoutX="164.0" layoutY="55.0" prefHeight="123.0" prefWidth="134.0" />
                 <ListView fx:id="gamePortListSearchView" layoutX="319.0" layoutY="54.0" prefHeight="125.0" prefWidth="125.0" />
                 <Text fill="WHITE" layoutX="35.0" layoutY="48.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Game Machines">
                     <font>
@@ -57,6 +62,17 @@
                         <Font size="17.0" />
                     </font>
                 </Text>
+            <TextField fx:id="gameMachineName" layoutX="25.0" layoutY="188.0" prefHeight="25.0" prefWidth="120.0" promptText="name" />
+            <TextField fx:id="gameMachineManufacturer" layoutX="24.0" layoutY="222.0" prefHeight="25.0" prefWidth="120.0" promptText="manu" />
+            <TextField fx:id="gameMachineType" layoutX="24.0" layoutY="254.0" prefHeight="25.0" prefWidth="120.0" promptText="type" />
+            <TextField fx:id="gameMachineReleaseYear" layoutX="24.0" layoutY="290.0" prefHeight="25.0" prefWidth="120.0" promptText="release year" />
+            <TextField fx:id="gameName" layoutX="170.0" layoutY="188.0" prefHeight="25.0" prefWidth="128.0" promptText="name" />
+            <TextField fx:id="gamePublisher" layoutX="170.0" layoutY="222.0" prefHeight="25.0" prefWidth="128.0" promptText="publisher" />
+            <TextField fx:id="gameDeveloper" layoutX="170.0" layoutY="254.0" prefHeight="25.0" prefWidth="128.0" promptText="developer" />
+            <TextField fx:id="gameReleaseYear" layoutX="170.0" layoutY="290.0" prefHeight="25.0" prefWidth="128.0" promptText="release year" />
+            <TextField fx:id="portedGameName" layoutX="317.0" layoutY="188.0" prefHeight="25.0" prefWidth="129.0" promptText="name" />
+            <TextField fx:id="portedGameMachine" layoutX="317.0" layoutY="222.0" prefHeight="25.0" prefWidth="129.0" promptText="machine" />
+            <TextField fx:id="portedGameReleaseYear" layoutX="316.0" layoutY="254.0" prefHeight="25.0" prefWidth="129.0" promptText="release year" />
             </children></AnchorPane>
     </center>
 </BorderPane>
