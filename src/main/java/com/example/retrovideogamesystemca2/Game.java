@@ -12,7 +12,6 @@ public class Game {
 
     private String machineDevelopedFor;
 
-    private GameMachine machine;
 
     private int gameReleaseYear;
 
@@ -23,13 +22,12 @@ public class Game {
     private int portsCount;
 
 
-    public Game(String gameName, String publisher, String description, String developer, String machineDevelopedFor, GameMachine machine, int gameReleaseYear, String cover) {
+    public Game(String gameName, String publisher, String description, String developer, String machineDevelopedFor, int gameReleaseYear, String cover) {
         this.gameName = gameName;
         this.publisher = publisher;
         this.description = description;
         this.developer = developer;
         this.machineDevelopedFor = machineDevelopedFor;
-        this.machine = machine;
         this.gameReleaseYear = gameReleaseYear;
         this.cover = cover;
         this.ports = new FastHash<>(10);
@@ -74,14 +72,6 @@ public class Game {
 
     public void setMachineDevelopedFor(String machineDevelopedFor) {
         this.machineDevelopedFor = machineDevelopedFor;
-    }
-
-    public GameMachine getMachine() {
-        return machine;
-    }
-
-    public void setMachine(GameMachine machine) {
-        this.machine = machine;
     }
 
     public int getGameReleaseYear() {

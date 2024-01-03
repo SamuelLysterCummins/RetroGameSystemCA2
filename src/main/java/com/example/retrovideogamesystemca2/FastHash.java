@@ -18,6 +18,7 @@ public class FastHash<T> implements Iterable<T>, Serializable {
     static class HashEntry<T> {
         String key;
         T value;
+
         HashEntry(String key, T value) {
             this.key = key;
             this.value = value;
@@ -38,7 +39,8 @@ public class FastHash<T> implements Iterable<T>, Serializable {
         int hashIndex = hashFunction(key);
         for (int i = 0; i < hashTable.length; i++) {
             int index = (hashIndex + i) % hashTable.length;
-            if (hashTable[index] == null || hashTable[index].key.equals(key)) {
+            HashEntry<T> entry = hashTable[index];
+            if (entry == null || entry.key.equals(key)) {
                 hashTable[index] = new HashEntry<>(key, value);
                 return true;
             }
@@ -69,5 +71,4 @@ public class FastHash<T> implements Iterable<T>, Serializable {
         }
         return false;
     }
-
 }

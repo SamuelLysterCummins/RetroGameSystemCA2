@@ -224,7 +224,7 @@ gamePortListView.getItems().clear();
 
 
     public void addGameButton(String gameName, String publisher, String description, String developer, String machineDevelopedFor, int gameReleaseYear, String cover) {
-        Game game = new Game(gameName, publisher, description, developer, machineDevelopedFor, null, gameReleaseYear, cover);
+        Game game = new Game(gameName, publisher, description, developer, machineDevelopedFor, gameReleaseYear, cover);
         system.addGame(gameName, game);
         refreshGames();
         }
@@ -336,19 +336,26 @@ gamePortListView.getItems().clear();
 
             Button submitButton = new Button("Save Changes");
             submitButton.setOnAction(e -> {
-                selectedGameMachine.setMachineName(nameField.getText());
-                selectedGameMachine.setManufacturer(manufacturerField.getText());
-                selectedGameMachine.setDescription(descriptionField.getText());
-                selectedGameMachine.setType(typeField.getText());
-                selectedGameMachine.setMedia(mediaField.getText());
-                selectedGameMachine.setMachineReleaseYear(Integer.parseInt(yearField.getText()));
-                selectedGameMachine.setMachinePrice(Double.parseDouble(priceField.getText()));
-                selectedGameMachine.setImageUrl(imageUrlField.getText());
-                gameMachineListView.refresh();
+                GameMachine updatedMachine = new GameMachine(
+                        nameField.getText(),
+                        manufacturerField.getText(),
+                        descriptionField.getText(),
+                        typeField.getText(),
+                        mediaField.getText(),
+                        Integer.parseInt(yearField.getText()),
+                        Double.parseDouble(priceField.getText()),
+                        imageUrlField.getText()
+                );
+
+                system.updateGameMachine(selectedGameMachine.getMachineName(), updatedMachine);
+                refreshGameMachines();
                 dialog.close();
             });
 
-            dialogVbox.getChildren().addAll(nameField, manufacturerField, descriptionField, typeField, mediaField, yearField, priceField, imageUrlField, submitButton);
+            dialogVbox.getChildren().addAll(
+                    nameField, manufacturerField, descriptionField, typeField,
+                    mediaField, yearField, priceField, imageUrlField, submitButton
+            );
             Scene dialogScene = new Scene(dialogVbox, 300, 400);
             dialog.setScene(dialogScene);
             dialog.show();
@@ -376,18 +383,25 @@ gamePortListView.getItems().clear();
 
             Button submitButton = new Button("Save Changes");
             submitButton.setOnAction(e -> {
-                selectedGame.setGameName(gameNameField.getText());
-                selectedGame.setPublisher(publisherField.getText());
-                selectedGame.setDescription(descriptionField.getText());
-                selectedGame.setDeveloper(developerField.getText());
-                selectedGame.setMachineDevelopedFor(machineDevelopedForField.getText());
-                selectedGame.setGameReleaseYear(Integer.parseInt(gameReleaseYearField.getText()));
-                selectedGame.setCover(coverField.getText());
-                gameListView.refresh();
+                Game updatedGame = new Game(
+                        gameNameField.getText(),
+                        publisherField.getText(),
+                        descriptionField.getText(),
+                        developerField.getText(),
+                        machineDevelopedForField.getText(),
+                        Integer.parseInt(gameReleaseYearField.getText()),
+                        coverField.getText()
+                );
+
+                system.updateGame(selectedGame.getGameName(), updatedGame);
+                refreshGames();
                 dialog.close();
             });
 
-            dialogVbox.getChildren().addAll(gameNameField, publisherField, descriptionField, developerField, machineDevelopedForField, gameReleaseYearField, coverField, submitButton);
+            dialogVbox.getChildren().addAll(
+                    gameNameField, publisherField, descriptionField, developerField,
+                    machineDevelopedForField, gameReleaseYearField, coverField, submitButton
+            );
             Scene dialogScene = new Scene(dialogVbox, 300, 400);
             dialog.setScene(dialogScene);
             dialog.show();
@@ -412,7 +426,22 @@ gamePortListView.getItems().clear();
 
             Button submitButton = new Button("Save Changes");
             submitButton.setOnAction(e -> {
-                gamePortListView.refresh();
+                String originalGameName = selectedGamePort.getOriginalGame().getGameName();
+                String originalMachineName = selectedGamePort.getPortedMachine().getMachineName();
+
+                Game updatedOriginalGame = system.getGame(originalGameField.getText());
+                GameMachine updatedPortedMachine = system.getGameMachine(portedMachineField.getText());
+
+                GamePort updatedGamePort = new GamePort(
+                        updatedOriginalGame,
+                        updatedPortedMachine,
+                        portDeveloperField.getText(),
+                        Integer.parseInt(gamePortReleaseYearField.getText()),
+                        coverField.getText()
+                );
+
+                system.updateGamePort(originalGameName, originalMachineName, updatedGamePort);
+                refreshPortedGames();
                 dialog.close();
             });
 

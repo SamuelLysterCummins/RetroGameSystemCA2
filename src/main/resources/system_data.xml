@@ -31,26 +31,26 @@
     <gameMachines>
       <hashTable>
         <null/>
-        <null/>
-        <null/>
-        <null/>
-        <null/>
-        <null/>
-        <null/>
         <com.example.retrovideogamesystemca2.FastHash_-HashEntry>
-          <key>afsef</key>
+          <key>sam</key>
           <value class="com.example.retrovideogamesystemca2.GameMachine">
-            <machineName>afsef</machineName>
-            <manufacturer>sefsef</manufacturer>
-            <description>sefsfsef</description>
-            <type>fsefsf</type>
-            <media>seefseef</media>
-            <machineReleaseYear>1111</machineReleaseYear>
+            <machineName>sam</machineName>
+            <manufacturer>sefsfse</manufacturer>
+            <description>fseefsfe</description>
+            <type>sefsef</type>
+            <media>sefsf</media>
+            <machineReleaseYear>2222</machineReleaseYear>
             <machinePrice>222.0</machinePrice>
-            <imageUrl>fesfsfe</imageUrl>
+            <imageUrl>fsefesf</imageUrl>
             <gamesCount>0</gamesCount>
           </value>
         </com.example.retrovideogamesystemca2.FastHash_-HashEntry>
+        <null/>
+        <null/>
+        <null/>
+        <null/>
+        <null/>
+        <null/>
         <null/>
         <null/>
       </hashTable>

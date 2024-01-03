@@ -68,6 +68,31 @@ public class GamesSystem {
     public GamePort getGamePort(String gamePortKey) { return gamePorts.get(gamePortKey);
     }
 
+    public void updateGameMachine(String originalName, GameMachine updatedGameMachine) {
+        gameMachines.remove(originalName);
+        gameMachines.add(updatedGameMachine.getMachineName(), updatedGameMachine);
+    }
+
+    public void updateGame(String originalName, Game updatedGame) {
+        games.remove(originalName);
+        games.add(updatedGame.getGameName(), updatedGame);
+    }
+
+    public void updateGamePort(String originalGameName, String originalMachineName, GamePort updatedGamePort) {
+        Game originalGame = getGame(originalGameName);
+        if (originalGame != null) {
+            String originalKey = originalGameName + "-" + originalMachineName;
+
+            originalGame.getPorts().remove(originalKey);
+
+            String updatedKey = updatedGamePort.getOriginalGame().getGameName() + "-" + updatedGamePort.getPortedMachine().getMachineName();
+            originalGame.getPorts().add(updatedKey, updatedGamePort);
+        } else {
+            System.out.println("Original game not found for updating port.");
+        }
+    }
+
+
     @SuppressWarnings("unchecked")
     public void save(String filePath) throws IOException {
         XStream xstream = new XStream(new DomDriver());
