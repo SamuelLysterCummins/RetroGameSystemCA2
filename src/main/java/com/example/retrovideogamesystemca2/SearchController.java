@@ -118,16 +118,16 @@ public class SearchController {
         }
     }
     // GamePort + its fxml portion
-    public GamePort searchGamePort(String gameTitle, String machineName, int releaseYear) {
-        String key = generateGamePortKey(gameTitle, machineName, releaseYear);
+    public GamePort searchGamePort(Game game, GameMachine machine, int releaseYear) {
+        String key = generateGamePortKey(game, machine, releaseYear);
         return gamePortHashTable.get(key);
     }
     public void SearchingGamePort(ActionEvent event) {
-        String gameTitle = "";
-        String machineName = "";
+        Game game = null;
+        GameMachine machine = null;
         int releaseYear = 0;
 
-        GamePort searchedGamePort = searchGamePort(gameTitle, machineName, releaseYear);
+        GamePort searchedGamePort = searchGamePort(game, machine, releaseYear);
 
         if (searchedGamePort != null) {
             gamePortListSearchView.getItems().clear();
@@ -147,6 +147,4 @@ public class SearchController {
     public void switchToGameSystem(ActionEvent event) throws IOException {
         SceneManager.getInstance().switchScene("gameSystem.fxml");
     }
-
-
 }
